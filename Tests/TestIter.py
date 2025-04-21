@@ -25,12 +25,34 @@ def count_example(start, step):
         print(number, end=' ')
 
 count_example(1, 2)
-print("Count")
+print("Count End")
 
 def repeat_example(text, times):
     repeater = repeat(text, times)
+    print(repeater)
     for item in repeater:
         print(item)
 
 repeat_example('A', 3)
-print("Repeat")
+print("Repeat End")
+
+def cycle_example(items):
+    cyc = cycle(items)
+    for _ in range(5):
+        print(next(cyc), end=' ')
+        #print(next(cyc), end=' ')
+
+cycle_example(['A', 'B', 'C'])
+print("\nCycle End")
+
+from itertools import chain, accumulate
+
+def accumulate_example(numbers):
+    acc = accumulate(numbers)
+    print(acc)
+    print(list(acc))
+
+accumulate_example([1,2,3,4,5])
+print("Accumulate End")
+
+

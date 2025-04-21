@@ -1,4 +1,13 @@
 """
+Explanation:
+
+We define a list of tasks.
+We want to assign a default_priority (e.g., "Medium") to each task.
+repeat("Medium") creates an iterator that will yield "Medium" endlessly (or until zip stops).
+zip(tasks, repeat("Medium")) pairs the first task with "Medium", the second task with "Medium", and so on, until all tasks are processed.
+list(...) consumes the zip iterator to create the final list of tuples.
+The second example shows how easily you can change the repeated constant value.
+The third example shows using the times argument of repeat to create a list of a specific size filled with a default value.
 """
 
 print("\n--- Repeat Example (with zip) ---")
