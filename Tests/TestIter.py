@@ -55,4 +55,43 @@ def accumulate_example(numbers):
 accumulate_example([1,2,3,4,5])
 print("Accumulate End")
 
+def chain_example(items1, items2):
+    chain_items = chain(items1, items2)
+    print(chain_items)
+    print(list(chain_items))
+
+chain_example([1,2,3], [4,5,6])
+print("Chain End")
+
+print("\n--- Chain Example (Multiple Iterables) ---")
+# chain is useful for combining multiple iterables into one
+# (without creating a new list in memory)
+def chain_multiple_iterables(*iterables):
+    """
+    Chains multiple iterables together.
+
+    Args:
+        *iterables: Any number of iterable objects (lists, tuples, etc.).
+
+    Returns:
+        list: A list containing all elements from all iterables, in order.
+    """
+    chained_items = chain(*iterables)
+    return list(chained_items)
+
+# --- Example Usage ---
+list1 = [1, 2, 3]
+list2 = [4, 5]
+tuple1 = (6, 7, 8)
+string1 = "abc"
+dict = {"d":9, "e":10}
+
+combined_list = chain_multiple_iterables(list1, list2, tuple1, string1, dict.values(), dict.keys())
+print(f"Combined list: {combined_list}")
+
+# Example with empty iterables
+empty_list = []
+combined_with_empty = chain_multiple_iterables(list1, empty_list, list2)
+print(f"Combined with empty list: {combined_with_empty}")
+
 

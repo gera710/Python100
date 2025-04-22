@@ -1,12 +1,5 @@
 from typing import List, Dict
 
-def func(lst=[]):
-    lst += [0]
-    return lst
-print(func())
-print(func())
-print(func())
-
 def func1(*arg, **kwargs):
     print(arg)
     print(kwargs)
