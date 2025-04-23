@@ -83,3 +83,50 @@ if __name__ == "__main__":
     for result in results_list:
             print(f"  - URL: {result.get('url')}, Status: {result.get('status')}, Duration: {result.get('duration_seconds', 'N/A')}s, Error: {result.get('error')}")
 
+"""
+Explanation:
+
+1. Imports: threading for thread management, time for sleep, random for variable delays.
+
+2. Shared Resources:
+    - results_list: A standard Python list where each thread will put its result (a dictionary).
+    - results_lock: A threading.Lock object. This is crucial. Before any thread modifies 
+    - results_list,  it must acquire this lock. Only one thread can hold the lock at a time, 
+    preventing race conditions 
+    (where multiple threads try to modify the list simultaneously, potentially corrupting it).
+
+3. simulate_fetch_data(url, task_id) Function:
+    - This is the function each thread will run.
+    - It prints start/finish messages, making it easy to see concurrent execution.
+    - time.sleep() simulates the I/O wait time (like waiting for a network response).
+    - It prepares a data dictionary containing the result.
+    - Critical Section: The with results_lock: block ensures that 
+    the results_list.append(data) operation is atomic 
+    (happens entirely without interruption from other threads trying to do the same). 
+    The lock is acquired at the start of the with block and released automatically at the end, 
+    even if errors occur within the block.
+
+4. Main Execution Block (if __name__ == "__main__":)
+    - urls_to_fetch: The list of tasks to perform.
+    - threads: A list to keep track of the Thread objects we create.
+    Thread Creation Loop:
+        - For each URL, a threading.Thread object is created.
+        - target=simulate_fetch_data specifies the function the thread should execute.
+        - args=(url, i) passes the specific URL and a unique ID to the function for that thread. Note: args must be a tuple, hence the comma (url, i).
+        - thread.start(): Starts the thread's activity. The simulate_fetch_data function begins executing in the new thread. The main loop continues immediately to the next iteration without waiting.
+    Thread Joining Loop:
+        - thread.join(): This is the core management step. 
+        The main thread stops and waits at this line until the specific thread it's calling join() 
+        on has finished executing.
+        - By looping through all threads and calling join() on each, 
+        we ensure the main thread only proceeds past this loop after 
+        all worker threads have completed their tasks.
+
+Result Processing: 
+    After all threads have joined, it's safe to process the results_list. 
+    The total time is printed, which should be significantly less than the sum of all 
+    individual sleep times if run sequentially.
+
+This example demonstrates the fundamental pattern of creating, starting, synchronizing 
+(waiting for completion with join), and safely collecting results from multiple threads.
+"""
