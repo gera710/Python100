@@ -1,3 +1,8 @@
+from itertools import count, cycle, repeat
+from itertools import chain, accumulate
+from typing import Dict
+from collections import ChainMap
+
 r = range(1, 11)
 print(r)
 print(r.__iter__)
@@ -15,7 +20,7 @@ print(list(i))
 #print(next(i)) - StopIteration
 
 print("Iter functions")
-from itertools import count, cycle, repeat
+
 
 def count_example(start, step):
     counter = count(start, step)
@@ -45,7 +50,7 @@ def cycle_example(items):
 cycle_example(['A', 'B', 'C'])
 print("\nCycle End")
 
-from itertools import chain, accumulate
+
 
 def accumulate_example(numbers):
     acc = accumulate(numbers)
@@ -84,7 +89,7 @@ list1 = [1, 2, 3]
 list2 = [4, 5]
 tuple1 = (6, 7, 8)
 string1 = "abc"
-dict = {"d":9, "e":10}
+dict: Dict[str, int] = {"d":9, "e":10}
 
 combined_list = chain_multiple_iterables(list1, list2, tuple1, string1, dict.values(), dict.keys())
 print(f"Combined list: {combined_list}")
@@ -93,5 +98,12 @@ print(f"Combined list: {combined_list}")
 empty_list = []
 combined_with_empty = chain_multiple_iterables(list1, empty_list, list2)
 print(f"Combined with empty list: {combined_with_empty}")
+
+dict1:Dict[str, int] = {"a":1, "b":2}
+
+print( dict.items() | dict1.items() )
+ch = ChainMap(dict, dict1)
+print(ch)
+
 
 
